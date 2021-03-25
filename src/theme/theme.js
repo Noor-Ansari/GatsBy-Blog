@@ -9,6 +9,7 @@ export default {
     dark1: "hsl(227,2%,12%)",
     dark2: "hsl(227,2%,26%)",
     dark3: "hsl(227,2%,64%)",
+    dark4: "hsl(200, 1%, 77%)",
     light1: "hsl(0,0%,97%)",
     light2: "hsl(0,0%,99%)",
   },
@@ -34,11 +35,12 @@ export default {
     xLarge: "4rem",
     xxLarge: "6rem",
   },
-  animations: {
-    button: "box-shadow 0.3s ease",
-    link: "color 0.2 ease",
+  transition: {
+    button: "all 0.3s ease",
+    link: "all 0.3s ease",
   },
   shadows: {
     shadow1: "0px 5px 20px rbga(30, 30, 31, 0.05)",
+    shadow2: "inset 0 -6px 0px #290d4a",
   },
 };
