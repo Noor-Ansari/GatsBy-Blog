@@ -4,8 +4,7 @@ import styles from "styled-components";
 import theme from "../theme/theme";
 
 const Wrapper = styles.div`
-width : 75%;
-margin : ${theme.sizes.xLarge} auto;
+margin : ${theme.sizes.medium};
 padding : ${theme.sizes.medium};
 background-color : ${theme.colors.dark2};
 `;

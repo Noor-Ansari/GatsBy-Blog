@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "gatsby";
 import Layout from "../components/Layout";
 import { graphql } from "gatsby";
 import styles from "styled-components";
 import theme from "../theme/theme";
 
 function blog({ data }) {
-  console.log(data.allMdx);
+  console.log(data);
   return (
     <Layout>
       <Header>All blog posts</Header>
@@ -16,7 +17,9 @@ function blog({ data }) {
           </Left>
           <Right>
             <p>{node.excerpt}</p>
-            <button>Read more..</button>
+            <Btn>
+              <Link to={node.fields.slug}>Read more.. </Link>
+            </Btn>
           </Right>
         </BlogCard>
       ))}
@@ -37,7 +40,9 @@ export const query = graphql`
         excerpt(pruneLength: 250)
         frontmatter {
           title
-          date
+        }
+        fields {
+          slug
         }
       }
     }
@@ -94,20 +99,23 @@ align-content : center;
 p {
     font-size : ${theme.sizes.small};
 }
-button {
+@media ${theme.breakpoints.mobile} {
+  grid-column : 2/-2;
+}
+`;
+
+const Btn = styles.div`
   width : ${theme.sizes.xxLarge};
   height : ${theme.sizes.medium};
   margin-top : ${theme.spacings.medium};
   border-radius : ${theme.sizes.xxSmall};
   border : none;  
+  display : grid;
+  place-items: center;
   background-color : ${theme.colors.dark3};
   transition : ${theme.transition.link};
   :hover{
     background-color : ${theme.colors.dark4};
     cursor : pointer;
   } 
-}
-@media ${theme.breakpoints.mobile} {
-  grid-column : 2/-2;
-}
 `;
