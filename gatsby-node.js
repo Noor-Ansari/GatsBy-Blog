@@ -17,25 +17,40 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 exports.createPages = async function ({ graphql, actions }) {
   const { createPage } = actions;
+  const blogPostTemplate = path.resolve("src/templates/blog-page.js");
+
   const result = await graphql(`
-    query {
+    {
       allMdx {
-        edges {
-          node {
-            fields {
-              slug
-            }
+        nodes {
+          fields {
+            slug
+          }
+          frontmatter {
+            title
           }
         }
       }
     }
   `);
-  result.data.allMdx.edges.forEach(({ node }) => {
+
+  if (result.errors) {
+    throw result.errors;
+  }
+
+  const posts = result.data.allMdx.nodes;
+
+  posts.forEach((post, idx) => {
+    const previous = idx === posts.length - 1 ? null : posts[idx + 1];
+    const next = idx === 0 ? null : posts[idx - 1];
+
     createPage({
-      path: node.fields.slug,
-      component: path.resolve("./src/templates/blog-page.js"),
+      path: post.fields.slug,
+      component: blogPostTemplate,
       context: {
-        slug: node.fields.slug,
+        slug: post.fields.slug,
+        previous,
+        next,
       },
     });
   });
