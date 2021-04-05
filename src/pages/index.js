@@ -3,22 +3,6 @@ import Layout from "../components/Layout";
 import styles from "styled-components";
 import theme from "../theme/theme";
 
-const Wrapper = styles.div`
-margin : ${theme.sizes.medium};
-padding : ${theme.sizes.medium};
-background-color : ${theme.colors.dark2};
-`;
-
-const Heading = styles.h1`
-font-size : ${theme.sizes.large};
-margin-bottom : ${theme.sizes.small};
-`;
-
-const Content = styles.p`
-font-size : ${theme.sizes.medium};
-line-height : 1.3;
-`;
-
 function Home() {
   return (
     <Layout>
@@ -43,3 +27,16 @@ function Home() {
 }
 
 export default Home;
+
+
+const Wrapper = styles.div`
+margin : ${theme.sizes.large} 0;
+`;
+
+const Heading = styles.h1`
+margin : ${theme.sizes.medium} 0;
+`;
+
+const Content = styles.p`
+line-height : 1.3;
+`;

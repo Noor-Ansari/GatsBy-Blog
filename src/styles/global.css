@@ -6,10 +6,9 @@
 
 body {
   font-family: Muli, sans-serif;
-  background-color: #222;
-  color: #fff;
   min-height: 100vh;
   position: relative;
+  color: #444;
 }
 
 body::after {
@@ -17,8 +16,22 @@ body::after {
   display: block;
   height: 4rem;
 }
-
 a {
   text-decoration: none;
-  color: #fff;
+  color : #1f1fea;
+}
+p {
+  font-size: 1.4rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
 }

@@ -4,12 +4,14 @@ export default {
     code: "Roboto Mono, monospace",
   },
   colors: {
-    main1: "hsl(207,70%,59%",
+    main1: "hsl(0, 0%, 0%)",
     main2: "hsl(207,70%,94%)",
     dark1: "hsl(227,2%,12%)",
     dark2: "hsl(227,2%,26%)",
     dark3: "hsl(227,2%,64%)",
     dark4: "hsl(200, 1%, 77%)",
+    accent: "#1f1fea",
+    accentHover : "#5c5cf0",
     light1: "hsl(0,0%,97%)",
     light2: "hsl(0,0%,99%)",
   },
@@ -25,6 +27,7 @@ export default {
     large: "3rem",
     xLarge: "4rem",
     xxLarge: "6rem",
+    ultraLarge : "12rem",
   },
   sizes: {
     xxSmall: ".25rem",
@@ -34,6 +37,7 @@ export default {
     large: "3rem",
     xLarge: "4rem",
     xxLarge: "6rem",
+    ultraLarge : "12rem",
   },
   transition: {
     button: "all 0.3s ease",

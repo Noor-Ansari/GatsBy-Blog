@@ -3,40 +3,7 @@ import { Link } from "gatsby";
 import theme from "../theme/theme";
 import styles from "styled-components";
 
-const Title = styles.h1`
-fontSize : ${theme.sizes.medium};
-color : ${theme.colors.dark2};
-`;
 
-const Nav = styles.nav`
-width : 100%;
-height : ${theme.sizes.medium};
-background : ${theme.colors.dark3};
-display : flex;
-align-items : center;
-justify-content : space-between;
-padding : ${theme.sizes.medium};
-position : sticky;
-top : 0;
-left : 0;
-`;
-
-const List = styles.ul`
-width : 40%;
-display : flex;
-justify-content : space-evenly;
-list-style-type : none;
- a{
-  cursor : pointer;
-  li {
-    font-size : ${theme.sizes.small};
-    color : ${theme.colors.dark2};
-  }
- }
- a:hover{
-   text-decoration : underline;
- } 
-`;
 
 function Header({ siteTitle }) {
   return (
@@ -44,6 +11,7 @@ function Header({ siteTitle }) {
       <Link to="/">
         <Title>{siteTitle}</Title>
       </Link>
+      
       <List>
         <Link to="/">
           <li>Home</li>
@@ -51,12 +19,51 @@ function Header({ siteTitle }) {
         <Link to="/blog">
           <li>Blog</li>
         </Link>
-        <Link to="/about">
-          <li>About</li>
-        </Link>
       </List>
     </Nav>
   );
 }
 
 export default Header;
+
+const Title = styles.label`
+font-size : ${theme.sizes.medium};
+color : ${theme.colors.light1};
+font-weight : 700;
+cursor : pointer;
+@media ${theme.breakpoints.mobile}{
+  font-size : ${theme.sizes.small};
+}
+`;
+
+const Nav = styles.nav`
+width : 100%;
+background : ${theme.colors.accent};
+height : ${theme.sizes.medium};
+display : flex;
+align-items : center;
+justify-content : space-between;
+padding : ${theme.spacings.medium};
+position : sticky;
+top : 0;
+left : 0;
+`;
+
+const List = styles.ul`
+width : 35%;
+display : flex;
+align-items : center;
+justify-content : space-evenly;
+list-style-type : none;
+ a{
+  cursor : pointer;
+  li {
+    font-size : ${theme.sizes.small};
+    color : ${theme.colors.light1};
+  }
+ }
+ a:hover{
+   text-decoration : underline;
+   color : ${theme.colors.light1};
+ } 
+`;

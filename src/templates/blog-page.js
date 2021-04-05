@@ -1,51 +1,40 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import { MDXRenderer } from "gatsby-plugin-mdx";
 import styles from "styled-components";
 import theme from "../theme/theme";
 import Layout from "../components/Layout";
 
-const Header = styles.h1`
-text-align : center;
-margin : ${theme.spacings.medium};
-`;
-
-const BlogCard = styles.div`
-min-height : 100vh;
-background-color : ${theme.colors.dark2}; 
-margin : ${theme.spacings.medium};
-padding : ${theme.sizes.medium};
-`;
-
 function BlogPage({ data, pageContext }) {
-  console.log(data);
-  console.log(pageContext);
-  const { previous, next } = pageContext;
+const {previous, next} = pageContext
   return (
     <Layout>
-      <Header>{data.mdx.frontmatter?.title}</Header>
-      <p>{data.mdx.frontmatter.date}</p>
+      <Header>
+        <h1>{data.markdownRemark.frontmatter.title}</h1>
+        <small>{data.markdownRemark.frontmatter.date}</small>  
+      </Header>
       <BlogCard>
-        <MDXRenderer>{data.mdx.body}</MDXRenderer>
+      <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
       </BlogCard>
-      {previous === false ? null : (
+      <Foot>
+      {previous && (
         <>
           {previous && (
-            <Link to={previous.fields.slug}>
-              <p>{previous.frontmatter.title}</p>
+            <Link to={previous.node.fields.slug}>
+              <p>{previous.node.frontmatter.title}</p>
             </Link>
           )}
         </>
       )}
-      {next === false ? null : (
+      {next && (
         <>
           {next && (
-            <Link to={next.fields.slug}>
-              <p>{next.frontmatter.title}</p>
+            <Link to={next.node.fields.slug}>
+              <p>{next.node.frontmatter.title}</p>
             </Link>
           )}
         </>
       )}
+      </Foot>
     </Layout>
   );
 }
@@ -53,13 +42,38 @@ function BlogPage({ data, pageContext }) {
 export default BlogPage;
 
 export const query = graphql`
-  query($slug: String!) {
-    mdx(fields: { slug: { eq: $slug } }) {
-      body
+  query BlogQuery($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
       frontmatter {
         title
-        date(formatString: "YYYY MMMM Do")
+        date(formatString : "MMMM DD, YYYY")
+      }
+      fields{
+        slug
       }
     }
   }
+`
+
+
+const Header = styles.header`
+h1{
+  font-size : ${theme.sizes.large};
+}
+margin : ${theme.spacings.medium} 0;
 `;
+
+const BlogCard = styles.div` 
+padding-bottom : ${theme.spacings.medium};
+margin-bottom : ${theme.spacings.medium};
+border-bottom : 1px solid #111;
+`;
+
+const Foot = styles.div`
+  display : flex;
+  justify-content : space-between;
+  a:hover{
+    text-decoration : underline;
+  }
+`

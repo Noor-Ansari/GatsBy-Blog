@@ -6,21 +6,21 @@ import styles from "styled-components";
 import theme from "../theme/theme";
 
 function blog({ data }) {
-  console.log(data);
   return (
     <Layout>
       <Header>All blog posts</Header>
-      {data.allMdx.nodes.map((node) => (
+      {data.allMarkdownRemark.edges.map(({node}) => (
         <BlogCard key={node.id}>
-          <Left>
-            <h1>{node.frontmatter.title}</h1>
-          </Left>
-          <Right>
+          <Title>
+            <h1><Link to={node.fields.slug}>{node.frontmatter.title}</Link></h1>
+            <small>Published Date: {node.frontmatter.date}</small>
+          </Title>
+          <Body>
             <p>{node.excerpt}</p>
-            <Btn>
-              <Link to={node.fields.slug}>Read more.. </Link>
-            </Btn>
-          </Right>
+            <Link to={node.fields.slug}>
+              <Btn>Read more... </Btn>
+            </Link>
+          </Body>
         </BlogCard>
       ))}
     </Layout>
@@ -30,16 +30,18 @@ function blog({ data }) {
 export default blog;
 
 export const query = graphql`
-  query {
-    allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { published: { eq: true } } }
-    ) {
-      nodes {
+query {
+  allMarkdownRemark(
+    sort: {fields: [frontmatter___date], order: DESC}
+    filter: {frontmatter: {published: {eq: true}}}
+  ) {
+    edges {
+      node {
         id
-        excerpt(pruneLength: 250)
+        excerpt(pruneLength: 200)
         frontmatter {
           title
+          date(formatString: "MMMM DD, YYYY")
         }
         fields {
           slug
@@ -47,75 +49,55 @@ export const query = graphql`
       }
     }
   }
-`;
+}`;
 
-const BlogCard = styles.div`
-height : 30vh;
-display : grid;
-grid-template-columns : repeat(12, 1fr);
-background-color : ${theme.colors.dark2};
-margin : ${theme.spacings.medium};
-border-radius : ${theme.sizes.xSmall};
-@media ${theme.breakpoints.mobile} {
-  grid-template-rows : 1fr 3fr;
-}
+const BlogCard = styles.article`
+min-height : 30vh;
+display : flex;
+flex-direction : column;
+margin-bottom : ${theme.spacings.medium};
 }
 `;
 
-const Header = styles.div`
+const Header = styles.header`
 font-size : ${theme.sizes.large};
-text-align : center;
-margin : ${theme.spacings.medium} 0; 
+margin : ${theme.spacings.medium} 0;
+padding : ${theme.spacings.small} 0; 
+border-bottom : 1px solid #000;
 `;
 
-const Left = styles.div`
-grid-column : 1/4;
-display : grid;
-align-content : center;
-border-right : 3px dotted #fff;
-padding : ${theme.spacings.medium};
-@media ${theme.breakpoints.mobile} {
-  grid-column : 2/-2;
-  justify-content : center;
-  border-right : none;
-  border-bottom : 3px dotted #fff;
-}
+const Title = styles.header`
+margin : ${theme.spacings.small} 0;
 h1{
+  a{
+    text-decoration : none;
+    color : ${theme.colors.accent};
+  }
+  a:hover{
+    color : ${theme.colors.accentHover};
+  }
   font-size : ${theme.sizes.medium};
-  transition : ${theme.transition.link};
-  :hover{
-    color : ${theme.colors.dark4};
-    cursor : pointer;
-  } 
   @media ${theme.breakpoints.mobile} {
     font-size : ${theme.sizes.medium};
   }
-`;
-
-const Right = styles.div`
-grid-column : 5/-2;
-display : grid;
-align-content : center;
-p {
-    font-size : ${theme.sizes.small};
-}
-@media ${theme.breakpoints.mobile} {
-  grid-column : 2/-2;
 }
 `;
 
-const Btn = styles.div`
+const Body = styles.section`
+  font-size : ${theme.sizes.small};
+`;
+
+const Btn = styles.button`
   width : ${theme.sizes.xxLarge};
   height : ${theme.sizes.medium};
   margin-top : ${theme.spacings.medium};
   border-radius : ${theme.sizes.xxSmall};
   border : none;  
-  display : grid;
-  place-items: center;
-  background-color : ${theme.colors.dark3};
+  background-color : ${theme.colors.accent};
+  color : #fff;
   transition : ${theme.transition.link};
   :hover{
-    background-color : ${theme.colors.dark4};
+    background-color : ${theme.colors.accentHover};
     cursor : pointer;
   } 
 `;
